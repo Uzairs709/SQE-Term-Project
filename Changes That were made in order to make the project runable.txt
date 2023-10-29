@@ -1,0 +1,12 @@
+First executed the queries of the file "basedata.sql" after removing the "NO_AUTO_CREATE_USER" mode from
+SET SQL_MODE ='IGNORE_SPACE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+
+Then I changed the applications properties by adding the username and password of my local DataBase server
+
+Then I executed the program, and It gave syntax error in AdminController class of controller package
+
+I change the Line 241 of AdminController class to ResultSet rst = stmt.executeQuery(); and executed the code again
+
+At the end opened localhost:8080 and website appeared with login screen
+I entered credentials to go to home page
+
