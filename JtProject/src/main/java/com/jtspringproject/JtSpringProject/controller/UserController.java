@@ -110,9 +110,6 @@ public class UserController{
 		
 		return "redirect:/";
 	}
-	
-	
-	
 	   //for Learning purpose of model
 		@GetMapping("/test")
 		public String Test(Model model)
@@ -150,6 +147,7 @@ public class UserController{
 			
 		}
 
+//TODO: implement and check this method
 
 //	@GetMapping("carts")
 //	public ModelAndView  getCartDetail()

@@ -134,7 +134,7 @@ public class AdminController {
 		return "redirect:/admin/categories";
 	}
 
-	
+	/*TODO: understand this part of the comment*/
 //	 --------------------------Remaining --------------------
 	@GetMapping("products")
 	public ModelAndView getproduct() {
@@ -196,7 +196,7 @@ public class AdminController {
 	@RequestMapping(value = "products/update/{id}",method=RequestMethod.POST)
 	public String updateProduct(@PathVariable("id") int id ,@RequestParam("name") String name,@RequestParam("categoryid") int categoryId ,@RequestParam("price") int price,@RequestParam("weight") int weight, @RequestParam("quantity")int quantity,@RequestParam("description") String description,@RequestParam("productImage") String productImage)
 	{
-
+		//todo: check this commented part of code
 //		this.productService.updateProduct();
 		return "redirect:/admin/products";
 	}

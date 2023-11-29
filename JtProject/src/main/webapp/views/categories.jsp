@@ -62,6 +62,7 @@
 				<div class="modal-content">
 					<form action="categories" method="post">
 						<div class="modal-header">
+							<!--TODO: check this error Here-->
 							<h5 class="modal-title" id="exampleModalLongTitle">Add New
 								Category</h5>
 							<button type="button" class="close" data-dismiss="modal"
@@ -129,6 +130,7 @@
 									
 										<div class="modal-content">
 											<div class="modal-header">
+												<!--TODO: check this error Here-->
 												<h5 class="modal-title" id="exampleModalLongTitle">Update
 													Product Details</h5>
 												<button type="button" class="close" data-dismiss="modal"

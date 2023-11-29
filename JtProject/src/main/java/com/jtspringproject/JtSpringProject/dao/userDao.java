@@ -36,7 +36,8 @@ public class userDao {
 		System.out.println("User added" + user.getId());
         return user;
 	}
-    
+	//TODO:  check this method
+
 //    public User checkLogin() {
 //    	this.sessionFactory.getCurrentSession().
 //    }

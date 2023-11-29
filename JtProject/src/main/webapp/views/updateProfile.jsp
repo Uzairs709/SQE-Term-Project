@@ -1,4 +1,4 @@
-3<!doctype html>
+<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -37,6 +37,7 @@
                        id="password">
             </div>
             <div class="form-group">
+                <!--TODO: check this error-->
                 <label for="Address">Address</label>
                 <textarea class="form-control form-control-lg" rows="3" placeholder="Enter Your Address" name="address">${address }</textarea>
             </div>

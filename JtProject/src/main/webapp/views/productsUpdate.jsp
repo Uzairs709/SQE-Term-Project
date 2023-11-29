@@ -52,18 +52,20 @@
 				<div class="col-sm-5">
 					
 					<div class="form-group">
+						<!--TODO: check this error-->
 						<label for="name">Id</label> 
 						<input type="number" readonly="readonly" class="form-control border border-success" name="id"  value="${product.id}">
 						
 
 					</div>
 					<div class="form-group">
+						<!--TODO: check this error-->
 						<label for="name">Name</label> 
 						<input type="text" class="form-control border border-success" required name="name" value="${product.name }" placeholder="Enter name">
 					</div>
 					
 					<div class="form-group">
-					
+						<!--TODO: check this error-->
 						<label for="category">Select Category</label> 
 						<select class="form-control border border-success" name="categoryid" readonly>
 							<option selected>Select a Category</option>
@@ -73,14 +75,17 @@
 						</select>
 					</div>
 					<div class="form-group">
+						<!--TODO: check this error-->
 						<label for="price">Price</label> 
 						<input type="number" class="form-control border border-success" required name="price" value="${ product.price }" min="1" placeholder="Price">
 					</div>
 					<div class="form-group">
+						<!--TODO: check this error-->
 						<label for="weight">Weight in grams</label> 
 						<input type="number" class="form-control border border-success" required name="weight" value="${product.weight }" min="1" placeholder="Weight">
 					</div>
 					<div class="form-group">
+						<!--TODO: check this error-->
 						<label for="weight">Available Quantity</label> 
 						<input type="number" class="form-control border border-success" required name="quantity" value="${ product.quantity }" min="1" placeholder="Quantity">
 					</div>
@@ -90,6 +95,7 @@
 				
 				<div class="col-sm-5">
 				<div class="form-group">
+					<!--TODO: check this error-->
 						<label for="description">Product Description</label>
 						<textarea class="form-control border border-success" rows="4" name="product.description" placeholder="Product Details" value= "${ pdescription }"></textarea>
 					</div>

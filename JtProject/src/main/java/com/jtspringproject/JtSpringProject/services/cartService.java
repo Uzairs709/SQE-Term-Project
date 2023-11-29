@@ -17,6 +17,7 @@ public class cartService {
     {
         return cartDao.addCart(cart);
     }
+    //TODO: check this commented code
 //    public Cart getCart(int id)
 //    {
 //        return cartDao.getCart(id);

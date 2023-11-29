@@ -25,17 +25,18 @@
             </div>
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control form-control-lg" required minlength="6" placeholder="Email*" required name="email" id="email"
+                <input type="email" class="form-control form-control-lg" minlength="6" placeholder="Email*" required name="email" id="email"
                        aria-describedby="emailHelp">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                     anyone else.</small>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control form-control-lg" required placeholder="Password*" required name="password"
+                <input type="password" class="form-control form-control-lg" minlength="6" maxlength="12" placeholder="Password*" required name="password"
                        id="password">
             </div>
             <div class="form-group">
+                <!--TODO: check this error "Address"-->
                 <label for="Address">Address</label>
                 <textarea class="form-control form-control-lg" rows="3" placeholder="Enter Your Address" name="address"></textarea>
             </div>
