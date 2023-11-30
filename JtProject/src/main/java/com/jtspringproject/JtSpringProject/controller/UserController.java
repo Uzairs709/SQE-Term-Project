@@ -38,6 +38,24 @@ public class UserController {
 	@Autowired
 	private productService productService;
 
+	int userlogcheck=0;
+	String usernameforclass="";
+	@RequestMapping(value = {"/","/logout"})
+	public String returnIndex() {
+		userlogcheck =0;
+		usernameforclass = "";
+		return "userLogin";
+	}
+	@GetMapping("/index")
+	public String index(Model model) {
+		if(usernameforclass.equalsIgnoreCase(""))
+			return "userLogin";
+		else {
+			model.addAttribute("username", usernameforclass);
+			return "index";
+		}
+
+	}
 	@GetMapping("/register")
 	public String registerUser() {
 		return "register";
@@ -64,6 +82,7 @@ public class UserController {
 
 			res.addCookie(new Cookie("username", u.getUsername()));
 			ModelAndView mView = new ModelAndView("index");
+			userlogcheck=1;
 			mView.addObject("user", u);
 			List<Product> products = this.productService.getProducts();
 

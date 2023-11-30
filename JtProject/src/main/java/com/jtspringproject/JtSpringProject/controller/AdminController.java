@@ -32,7 +32,6 @@ public class AdminController {
 	private userService userService;
 	@Autowired
 	private categoryService categoryService;
-	
 	@Autowired
 	private productService productService;
 	
@@ -57,8 +56,7 @@ public class AdminController {
 		}
 			
 	}
-	
-	
+
 	@GetMapping("login")
 	public String adminlogin() {
 		
