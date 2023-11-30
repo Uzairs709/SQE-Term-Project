@@ -43,22 +43,27 @@ public class userDao {
 //    }
     @Transactional
     public User getUser(String username,String password) {
-    	Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
-    	query.setParameter("username",username);
-    	
-    	try {
-			User user = (User) query.getSingleResult();
-			System.out.println(user.getPassword());
-			if(password.equals(user.getPassword())) {
-				return user;
-			}else {		
-				return new User();
-			}
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-			User user = new User();
-			return user;
+		Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
+		query.setParameter("username", username);
+
+		User user;
+		try {
+			user = (User) query.getSingleResult();
+		} catch (NoResultException e) {
+			// User does not exist in the database
+			user = null;
 		}
-    	
-    }
+
+		if (user == null) {
+			return null;
+		} else {
+			// Valid user, check password
+			if (password.equals(user.getPassword())) {
+				return user;
+			} else {
+				return null;
+			}
+		}
+
+	}
 }
