@@ -54,24 +54,24 @@
 					
 					<div class="form-group">
 						<c:forEach var="product" items="${products}">
-							<!--TODO: check this error "name"-->
-						<label for="name">Id</label>
-						<input type="number" readonly="readonly" class="form-control border border-warning" name="id"  value="${product.id + 1} ">
+
+						<label for="Id">Id</label>
+						<input type="number" readonly="readonly" class="form-control border border-warning" id="Id" name="id"  value="${product.id + 1} ">
 						
 						</c:forEach>
 						
 
 					</div>
 					<div class="form-group">
-						<!--TODO: check this error "name"-->
+
 						<label for="name">Name</label> 
-						<input type="text" class="form-control border border-warning" required name="name" placeholder="Enter name">
+						<input type="text" class="form-control border border-warning" required id="name" name="name" placeholder="Enter name">
 					</div>
 					
 					<div class="form-group">
-						<!--TODO: check this error "category"-->
+
 						<label for="category">Select Category</label> 
-						<select class="form-control border border-warning" name="categoryid" required>
+						<select class="form-control border border-warning" id="category" name="categoryid" required>
                             <option selected>Select a Category</option>
 							<c:forEach var="category" items="${categories}">
 								<option value="${category.id}">${category.name}</option>
@@ -81,19 +81,19 @@
 					</div>
 					
 					<div class="form-group">
-						<!--TODO: check this error-->
+
 						<label for="price">Price</label> 
-						<input type="number" class="form-control border border-warning" required name="price" min="1" placeholder="Price">
+						<input type="number" class="form-control border border-warning" required id="price" name="price" min="1" placeholder="Price">
 					</div>
 					<div class="form-group">
-						<!--TODO: check this error-->
+
 						<label for="weight">Weight in grams</label> 
-						<input type="number" class="form-control border border-warning" required name="weight" min="1" placeholder="Weight">
+						<input type="number" class="form-control border border-warning" required id="weight" name="weight" min="1" placeholder="Weight">
 					</div>
 					<div class="form-group">
-						<!--TODO: check this error-->
-						<label for="weight">Available Quantity</label> 
-						<input type="number" class="form-control border border-warning" required name="quantity" min="1" placeholder="Quantity">
+
+						<label for="quantity">Available Quantity</label>
+						<input type="number" class="form-control border border-warning" required id="quantity" name="quantity" min="1" placeholder="Quantity">
 					</div>
 					
 					
@@ -101,15 +101,15 @@
 				
 				<div class="col-sm-5"><br>
 				<div class="form-group">
-					<!--TODO: check this error-->
+
 						<label for="description">Product Description</label>
-						<textarea class="form-control border border-warning" rows="4" name="description" placeholder="Product Details" value= "no product details"></textarea>
+						<textarea class="form-control border border-warning" rows="4" id="description" name="description" placeholder="Product Details" value= "no product details"></textarea>
 					</div>
 					<p>Product Image</p>
 					<div class="form-group">
-						<!--TODO: check this error-->
+
 											<label for="Image">Image Link</label>
-                      						<input type="text" class="form-control border border-warning" required name="productImage" placeholder="Enter Short Image Link">
+                      						<input type="text" class="form-control border border-warning" required id="Image" name="productImage" placeholder="Enter Short Image Link">
 
 
 					</div>

@@ -38,6 +38,9 @@ public class UserController {
 	@Autowired
 	private productService productService;
 
+	@Autowired
+	private cartService cartService;
+
 	int userlogcheck=0;
 	String usernameforclass="";
 	@RequestMapping(value = {"/","/logout"})
@@ -54,7 +57,6 @@ public class UserController {
 			model.addAttribute("username", usernameforclass);
 			return "index";
 		}
-
 	}
 	@GetMapping("/register")
 	public String registerUser() {
@@ -119,57 +121,33 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "newuserregister", method = RequestMethod.POST)
-	public String newUseRegister(@ModelAttribute User user) {
+	public ModelAndView newUseRegister(@ModelAttribute User user) {
 
-		System.out.println(user.getEmail());
-		user.setRole("ROLE_NORMAL");
-		this.userService.addUser(user);
+		boolean exists = this.userService.checkUserExists(user.getUsername());
 
-		return "redirect:/";
-	}
+		if(!exists) {
+			System.out.println(user.getEmail());
+			user.setRole("ROLE_NORMAL");
+			this.userService.addUser(user);
 
-	//for Learning purpose of model
-	@GetMapping("/test")
-	public String Test(Model model) {
-		System.out.println("test page");
-		model.addAttribute("author", "jay gajera");
-		model.addAttribute("id", 40);
-
-		List<String> friends = new ArrayList<String>();
-		model.addAttribute("f", friends);
-		friends.add("xyz");
-		friends.add("abc");
-
-		return "test";
-	}
-
-	// for learning purpose of model and view ( how data is pass to view)
-
-	@GetMapping("/test2")
-	public ModelAndView Test2() {
-		System.out.println("test page");
-		//create modelandview object
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("name", "jay gajera 17");
-		mv.addObject("id", 40);
-		mv.setViewName("test2");
-
-		List<Integer> list = new ArrayList<Integer>();
-		list.add(10);
-		list.add(25);
-		mv.addObject("marks", list);
-		return mv;
-
-
+			System.out.println("New user created: " + user.getUsername());
+			ModelAndView mView = new ModelAndView("userLogin");
+			return mView;
+		} else {
+			System.out.println("New user not created - username taken: " + user.getUsername());
+			ModelAndView mView = new ModelAndView("register");
+			mView.addObject("msg",  "Please choose a different username.");
+			return mView;
+		}
 	}
 
 //TODO: implement and check this method
 
-//	@GetMapping("carts")
-//	public ModelAndView  getCartDetail()
-//	{
-//		ModelAndView mv= new ModelAndView();
-//		List<Cart>carts = cartService.getCarts();
-//	}
+	@GetMapping("carts")
+	public ModelAndView  getCartDetail() {
+		ModelAndView mv= new ModelAndView();
+		List<Cart>carts = cartService.getCarts();
+		return mv;
+	}
 
 }
