@@ -106,3 +106,45 @@ The following guides illustrate how to use some features concretely:
 
 [youtube-shield]:https://img.shields.io/youtube/views/c6WWdINWSlI?style=social
 [youtube-url]:  https://youtu.be/c6WWdINWSlI
+
+##1. Update your pom.xml file:
+Ensure that your pom.xml includes the necessary dependencies for JUnit and Maven Surefire Plugin.
+
+<dependencies>
+    <!-- Your other dependencies -->
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+
+<build>
+    <plugins>
+        <!-- Your other plugins -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M5</version>
+        </plugin>
+    </plugins>
+</build>
+
+##2. Organize your project structure:
+Make sure your test classes are in the standard Maven directory structure: src/test/java.
+
+
+## Running Unit Tests
+
+To run all unit tests, execute the following Maven command in the terminal:
+
+To run specific tests, you can use the -Dtest option followed by the test class name. For example, to run a specific test class named MyTest:
+mvn test -Dtest=MyTest
+
+
+You can also run specific test methods within a test class by specifying the method name:
+mvn test -Dtest=MyTest#myTestMethod
+
+
+
