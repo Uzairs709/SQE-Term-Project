@@ -17,10 +17,9 @@ public class cartService {
     {
         return cartDao.addCart(cart);
     }
-    //TODO: check this commented code
-    public Cart getCart(int userId)
+    public Cart getCart(int id)
     {
-        return cartDao.getCart(userId);
+        return cartDao.getCart(id);
     }
 public List<Cart> getCarts(){
     return this.cartDao.getCarts();

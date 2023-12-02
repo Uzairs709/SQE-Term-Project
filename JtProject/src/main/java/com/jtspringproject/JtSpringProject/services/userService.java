@@ -21,14 +21,15 @@ public class userService {
 	public User addUser(User user) {
 		return this.userDao.saveUser(user);
 	}
-
-	public boolean checkUserExists(String username) {
-		return this.userDao.userExists(username);
-	}
 	
 	public User checkLogin(String username,String password) {
 		return this.userDao.getUser(username, password);
 	}
-
+	public boolean checkUserExists(String username) {
+		return this.userDao.userExists(username);
+	}
+	public void deleteUser(int userId) {
+		userDao.deleteUser(userId);
+	}
 	
 }

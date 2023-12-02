@@ -25,23 +25,24 @@
             </div>
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control form-control-lg" minlength="6" placeholder="Email*" required name="email" id="email"
+                <input type="email" class="form-control form-control-lg" required minlength="6" placeholder="Email*" required name="email" id="email"
                        aria-describedby="emailHelp">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                     anyone else.</small>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control form-control-lg" minlength="6" maxlength="12" placeholder="Password*" required name="password"
+                <input type="password" class="form-control form-control-lg" required placeholder="Password*" required name="password"
                        id="password">
             </div>
             <div class="form-group">
                 <label for="Address">Address</label>
                 <textarea class="form-control form-control-lg" id="Address" rows="3" placeholder="Enter Your Address" name="address"></textarea>
             </div>
-            <span style="margin-top: 10px">Already have an account <a class="linkControl" href="/">Login here</a></span> <br><br>
-            <input type="submit" value="Register" class="btn btn-primary btn-block"><br>
-            <br><h3 style="color:red;">${msg}</h3>
+<span style="margin-top: 10px">Already have an account <a class="linkControl" href="/">Login here</a></span> <br><br>
+            <input type="submit" value="Register" class="btn btn-primary btn-block">
+            <h3 style="color:red;">${msg}</h3><br>
+            
         </form>
     </div>
 </div>

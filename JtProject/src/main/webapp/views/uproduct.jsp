@@ -34,7 +34,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto"></ul>
 				<ul class="navbar-nav">
-					<li class="nav-item active"><a class="nav-link" href="/adminhome">Home
+					<li class="nav-item active"><a class="nav-link" href="/userloginvalidate">Home
 							Page</a></li>
 					<li class="nav-item active"><a class="nav-link" href="/user/logout">Logout</a>
 					</li>
@@ -100,6 +100,7 @@
 
 				    <form action="products/addtocart" method="get">
 							<input type="hidden" name="id" value="${product.id}">
+						<!--TODO:add to cart feature here too ...-->
 							<input type="submit" value="Add To Cart" class="btn btn-warning">
 					</form>
 					</td>

@@ -39,7 +39,7 @@
                     <ul class="navbar-nav mr-auto"></ul>
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" th:href="@{/}" href="#">CART</a>
+                            <a class="nav-link"  href="/carts">CART</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="/admin/profileDisplay" >Profile</a>
@@ -95,6 +95,7 @@
                                     <h5 class="card-text">Category: ${product.category.name}</h5>
                                     <h5 class="card-text">Price: ${product.price}</h5>
                                     <p class="card-text">Description: ${product.description}</p>
+                                    <!--TODO: add to cart feature-->
                                     <a href="#" class="btn btn-primary">Add to Cart</a>
                                 </div>
                             </div>
@@ -118,4 +119,3 @@
         </html>
     </div>
 </section>
-

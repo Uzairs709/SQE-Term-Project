@@ -36,41 +36,53 @@ public class userDao {
 		System.out.println("User added" + user.getId());
         return user;
 	}
-	//TODO:  check this method
-
+    
 //    public User checkLogin() {
 //    	this.sessionFactory.getCurrentSession().
 //    }
-    @Transactional
-    public User getUser(String username,String password) {
-		Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
-		query.setParameter("username", username);
+@Transactional
+public User getUser(String username,String password) {
+	Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
+	query.setParameter("username", username);
 
-		User user;
-		try {
-			user = (User) query.getSingleResult();
-		} catch (NoResultException e) {
-			// User does not exist in the database
-			user = null;
-		}
-
-		if (user == null) {
-			return null;
-		} else {
-			// Valid user, check password
-			if (password.equals(user.getPassword())) {
-				return user;
-			} else {
-				return null;
-			}
-		}
-
+	User user;
+	try {
+		user = (User) query.getSingleResult();
+	} catch (NoResultException e) {
+		// User does not exist in the database
+		user = null;
 	}
 
+	String errorMessage;
+
+	if (user == null) {
+		// Invalid user, set error message
+		errorMessage = "Invalid username or password";
+		return user;
+	} else {
+		// Valid user, check password
+		if (password.equals(user.getPassword())) {
+			return user;
+		} else {
+			// Invalid password, set error message
+			errorMessage = "Invalid username or password";
+			return null;
+		}
+	}
+
+}
 	@Transactional
 	public boolean userExists(String username) {
 		Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
 		query.setParameter("username",username);
 		return !query.getResultList().isEmpty();
+	}
+	@Transactional
+	public void deleteUser(int userId) {
+		Session session = this.sessionFactory.getCurrentSession();
+		User user = session.load(User.class, userId);
+		if (user != null) {
+			session.delete(user);
+		}
 	}
 }

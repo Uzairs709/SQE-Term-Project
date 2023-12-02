@@ -16,7 +16,7 @@
 
 
 <div class="container my-5" style="width: 1800px;" ><br>
-
+    
         <div class="jumbotron border col-sm-5 mx-auto">
             <h2 class="text-center">Admin Login</h2><br>
             <form action="/admin/loginvalidate" method="post">
@@ -24,17 +24,18 @@
                     <label for="username">Username :</label>
                     <input type="text" name="username" id="username" placeholder="Admin username" required class="form-control form-control-lg border border-danger">
                 </div>
-
+					
                 <div class="form-group">
                     <label for="password">Password :</label>
                     <input type="password" class="form-control form-control-lg border border-danger	" placeholder="Admin Password" required name="password" id="password">
                 </div><br>
 
                 <input type="submit" value="Login" class="btn btn-primary btn-block">
-                <br><h3 style="color:red;">${msg }</h3>
+                <br><h3 style="color:red;">${msg}</h3>
                 <br>
             </form>
         </div>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

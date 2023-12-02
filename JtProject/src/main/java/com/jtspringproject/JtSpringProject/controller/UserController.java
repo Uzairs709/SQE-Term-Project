@@ -30,8 +30,8 @@ import com.jtspringproject.JtSpringProject.services.cartService;
 
 
 @Controller
-public class UserController {
-
+public class UserController{
+	
 	@Autowired
 	private userService userService;
 
@@ -39,51 +39,43 @@ public class UserController {
 	private productService productService;
 
 	@Autowired
-	private cartService cartService;
-
-	int userlogcheck=0;
-	String usernameforclass="";
+			private cartService cartService;
+	int userlogcheck = 0;
+	String usernameforclass = "";
 	@RequestMapping(value = {"/","/logout"})
 	public String returnIndex() {
 		userlogcheck =0;
 		usernameforclass = "";
 		return "userLogin";
 	}
-	@GetMapping("/index")
-	public String index(Model model) {
-		if(usernameforclass.equalsIgnoreCase(""))
-			return "userLogin";
-		else {
-			model.addAttribute("username", usernameforclass);
-			return "index";
-		}
-	}
 	@GetMapping("/register")
-	public String registerUser() {
+	public String registerUser()
+	{
 		return "register";
 	}
 
 	@GetMapping("/buy")
-	public String buy() {
+	public String buy()
+	{
 		return "buy";
 	}
-
+	
 
 	@GetMapping("/")
 	public String userlogin(Model model) {
-
+		
 		return "userLogin";
 	}
-
 	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)
-	public ModelAndView userlogin(@RequestParam("username") String username, @RequestParam("password") String pass, Model model, HttpServletResponse res) {
-
+	public ModelAndView userlogin( @RequestParam("username") String username, @RequestParam("password") String pass,Model model,HttpServletResponse res) {
+		
 		System.out.println(pass);
 		User u = this.userService.checkLogin(username, pass);
-		if (u != null && u.getUsername().equals(username)) {
-
+		//System.out.println(u.getUsername());
+		if(u != null && u.getUsername().equals(username)) {
+			
 			res.addCookie(new Cookie("username", u.getUsername()));
-			ModelAndView mView = new ModelAndView("index");
+			ModelAndView mView  = new ModelAndView("index");
 			userlogcheck=1;
 			mView.addObject("user", u);
 			List<Product> products = this.productService.getProducts();
@@ -95,15 +87,15 @@ public class UserController {
 			}
 			return mView;
 
-		} else {
+		}else {
 			ModelAndView mView = new ModelAndView("userLogin");
 			mView.addObject("msg", "Please enter correct email and password");
 			return mView;
 		}
-
+		
 	}
-
-
+	
+	
 	@GetMapping("/user/products")
 	public ModelAndView getproduct() {
 
@@ -111,16 +103,14 @@ public class UserController {
 
 		List<Product> products = this.productService.getProducts();
 
-		if (products.isEmpty()) {
-			mView.addObject("msg", "No products are available");
-		} else {
-			mView.addObject("products", products);
+		if(products.isEmpty()) {
+			mView.addObject("msg","No products are available");
+		}else {
+			mView.addObject("products",products);
 		}
 
 		return mView;
-	}
-
-	@RequestMapping(value = "newuserregister", method = RequestMethod.POST)
+	}@RequestMapping(value = "newuserregister", method = RequestMethod.POST)
 	public ModelAndView newUseRegister(@ModelAttribute User user) {
 
 		boolean exists = this.userService.checkUserExists(user.getUsername());
@@ -136,18 +126,18 @@ public class UserController {
 		} else {
 			System.out.println("New user not created - username taken: " + user.getUsername());
 			ModelAndView mView = new ModelAndView("register");
-			mView.addObject("msg",  "Please choose a different username.");
+			mView.addObject("msg", user.getUsername() + " is taken. Please choose a different username.");
 			return mView;
 		}
 	}
 
-//TODO: implement and check this method
-
-	@GetMapping("carts")
-	public ModelAndView  getCartDetail() {
-		ModelAndView mv= new ModelAndView();
+	@GetMapping("/carts")
+	public ModelAndView  getCartDetail()
+	{
+		ModelAndView mv= new ModelAndView("cartproduct");
 		List<Cart>carts = cartService.getCarts();
-		return mv;
-	}
-
+		mv.addObject("carts",carts);
+        return mv;
+    }
+	  
 }
