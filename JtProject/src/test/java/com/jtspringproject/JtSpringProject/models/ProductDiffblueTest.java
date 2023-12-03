@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.Test;
 
-class ProductTest {
+class ProductDiffblueTest {
     /**
+     * Methods under test:
+     *
      * <ul>
      *   <li>{@link Product#setCategory(Category)}
      *   <li>{@link Product#setDescription(String)}

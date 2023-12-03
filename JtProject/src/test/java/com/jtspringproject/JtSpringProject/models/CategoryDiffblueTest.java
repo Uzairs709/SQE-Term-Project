@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-class CategoryTest {
+class CategoryDiffblueTest {
     /**
+     * Methods under test:
+     *
      * <ul>
      *   <li>{@link Category#setId(int)}
      *   <li>{@link Category#setName(String)}

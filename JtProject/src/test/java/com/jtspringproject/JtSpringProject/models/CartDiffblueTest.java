@@ -5,11 +5,24 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-class CartTest {
-
+class CartDiffblueTest {
+    /**
+     * Methods under test:
+     *
+     * <ul>
+     *   <li>default or parameterless constructor of {@link Cart}
+     *   <li>{@link Cart#setCustomer(User)}
+     *   <li>{@link Cart#setId(int)}
+     *   <li>{@link Cart#setProducts(List)}
+     *   <li>{@link Cart#getCustomer()}
+     *   <li>{@link Cart#getId()}
+     *   <li>{@link Cart#getProducts()}
+     * </ul>
+     */
     @Test
     void testConstructor() {
         Cart actualCart = new Cart();
@@ -32,7 +45,7 @@ class CartTest {
     }
 
     /**
-      {@link Cart#addProduct(Product)}
+     * Method under test: {@link Cart#addProduct(Product)}
      */
     @Test
     void testAddProduct() {
@@ -56,7 +69,7 @@ class CartTest {
     }
 
     /**
-     {@link Cart#removeProduct(Product)}
+     * Method under test: {@link Cart#removeProduct(Product)}
      */
     @Test
     void testRemoveProduct() {

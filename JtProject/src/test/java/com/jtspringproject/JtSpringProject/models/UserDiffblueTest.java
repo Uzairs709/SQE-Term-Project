@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-class UserTest {
+class UserDiffblueTest {
     /**
+     * Methods under test:
+     *
      * <ul>
      *   <li>{@link User#setAddress(String)}
      *   <li>{@link User#setEmail(String)}

@@ -39,10 +39,11 @@
                     <ul class="navbar-nav mr-auto"></ul>
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link"  href="/carts">CART</a>
+                            <a class="nav-link" th:href="@{/cartproduct}" href="cartproduct">CART</a>
                         </li>
+
                         <li class="nav-item active">
-                            <a class="nav-link" href="/admin/profileDisplay" >Profile</a>
+                            <a class="nav-link" href="profileDisplay" >Profile</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" sec:authorize="isAuthenticated()" href="logout">Logout</a>
@@ -53,6 +54,16 @@
                 </div>
             </div>
         </nav>
+        <!-- Add this script to index.jsp -->
+        <script>
+            var cartProducts = [];  // Array to store product IDs
+
+            function addToCart(productId) {
+                cartProducts.push(productId);
+                alert('Product added to cart!');
+            }
+        </script>
+
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -95,8 +106,12 @@
                                     <h5 class="card-text">Category: ${product.category.name}</h5>
                                     <h5 class="card-text">Price: ${product.price}</h5>
                                     <p class="card-text">Description: ${product.description}</p>
-                                    <!--TODO: add to cart feature-->
-                                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                                    <form action="index" method="post">
+                                        <input type="hidden" name="product_id" value="${product.id}">
+                                        <button class="btn btn-danger" type="submit">Add to Cart</button>
+                                    </form>
+
+
                                 </div>
                             </div>
                         </div> </c:forEach>
@@ -111,11 +126,5 @@
                     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
                     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
                     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-                </p>
-            </div>
-        </footer>
-
         </body>
         </html>
-    </div>
-</section>
