@@ -286,6 +286,6 @@ public class AdminController {
 		userService.deleteUser(customerId);
 		return "redirect:/admin/customers";
 	}
-	
+
 
 }

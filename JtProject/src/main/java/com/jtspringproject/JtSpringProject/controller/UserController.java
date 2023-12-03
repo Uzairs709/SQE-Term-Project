@@ -5,11 +5,7 @@ import com.jtspringproject.JtSpringProject.models.Product;
 import com.jtspringproject.JtSpringProject.models.User;
 
 import java.io.Console;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,13 +55,19 @@ public class UserController{
 	{
 		return "buy";
 	}
-	
 
-	@GetMapping("/")
-	public String userlogin(Model model) {
-		
-		return "userLogin";
-	}
+
+//	@RequestMapping(value = {"/","/logout"})
+//	public String returnIndex() throws SQLException {
+//		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava", "root", "LOL090LOL0");
+//		String deleteProductCartQuery = "DELETE FROM Product_cart";
+//
+//		try (PreparedStatement deleteStmt = con.prepareStatement(deleteProductCartQuery)) {
+//			// Execute the delete statement
+//			int rowsAffected = deleteStmt.executeUpdate();
+//		}
+//		return "userLogin";
+//	}
 	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)
 	public ModelAndView userlogin( @RequestParam("username") String username, @RequestParam("password") String pass,Model model,HttpServletResponse res) {
 		
@@ -129,6 +131,170 @@ public class UserController{
 			mView.addObject("msg", user.getUsername() + " is taken. Please choose a different username.");
 			return mView;
 		}
+	}
+
+	@RequestMapping(value = "index", method = RequestMethod.POST)
+	public String addToCart(@RequestParam("product_id") String productId) {
+		System.out.println("Product ID added to cart: " + productId);
+
+		try {
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava", "root", "LOL090LOL0");
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM product WHERE product_id = ?");
+
+			stmt.setString(1, productId);
+
+
+			ResultSet rst = stmt.executeQuery();
+
+			if (rst.next()) {
+				int productIdFromDB = rst.getInt("product_id");
+				String productName = rst.getString("name");
+				String description = rst.getString("description");
+				double price = rst.getDouble("price");
+				String imageFromDB = rst.getString("image");
+				int quantityFromDB = rst.getInt("quantity");
+				int weightFromDB = rst.getInt("weight");
+				int categoryIdFromDB = rst.getInt("category_id");
+				int customerIdFromDB = rst.getInt("customer_id");
+
+
+				System.out.println("Product ID: " + productIdFromDB);
+				System.out.println("Product Name: " + productName);
+				System.out.println("Description: " + description);
+				System.out.println("Price: " + price);
+
+				// Now you can use the retrieved data to insert into the 'product_cart' table
+				String insertQuery = "INSERT INTO Product_cart (product_id, description, name, price, image, quantity, weight, category_id, customer_id) " +
+						"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+				try (PreparedStatement insertStmt = con.prepareStatement(insertQuery)) {
+					insertStmt.setInt(1, productIdFromDB);
+					insertStmt.setString(2, description);
+					insertStmt.setString(3, productName);
+					insertStmt.setDouble(4, price);
+					insertStmt.setString(5, imageFromDB);
+					insertStmt.setInt(6, quantityFromDB);
+					insertStmt.setInt(7, weightFromDB);
+					insertStmt.setInt(8, categoryIdFromDB);
+					insertStmt.setInt(9, customerIdFromDB);
+
+					// Execute the insert statement
+					int rowsAffected = insertStmt.executeUpdate();
+
+
+				} catch (SQLException ex) {
+					throw new RuntimeException(ex);
+				}
+			}
+			// Add your logic to store the product information, maybe in a session or database table
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return "cartproduct";
+	}
+
+	@PostMapping("/deleteCartItem")
+	public String deleteCartItem(@RequestParam("id") int cartItemId) {
+		try {
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","LOL090LOL0");
+			String deleteQuery = "DELETE FROM product_cart WHERE product_id = ?";
+			PreparedStatement stmt = con.prepareStatement(deleteQuery);
+			stmt.setInt(1, cartItemId);
+			int rowsAffected = stmt.executeUpdate();
+			System.out.println("Item deleted from cart. Cart Item ID: " + cartItemId);
+
+			// Redirect back to the cartproduct page
+			return "redirect:/cartproduct";
+		} catch (Exception e) {
+			// Handle exceptions (e.g., log the error)
+			System.out.println("Error deleting item from cart: " + e.getMessage());
+			return "redirect:/cartproduct"; // Redirect back to the cartproduct page in case of an error
+		}
+	}
+
+	@PostMapping("/addToCart")
+	public String addToCart(@RequestParam("product_id") int productId) {
+		System.out.println("Product ID added to cart: " + productId);
+		try {
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava", "root", "LOL090LOL0");
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM product WHERE product_id = ?");
+
+			stmt.setInt(1, productId);
+
+
+			ResultSet rst = stmt.executeQuery();
+
+			if (rst.next()) {
+				int productIdFromDB = rst.getInt("product_id");
+				String productName = rst.getString("name");
+				String description = rst.getString("description");
+				double price = rst.getDouble("price");
+				String imageFromDB = rst.getString("image");
+				int quantityFromDB = rst.getInt("quantity");
+				int weightFromDB = rst.getInt("weight");
+				int categoryIdFromDB = rst.getInt("category_id");
+				int customerIdFromDB = rst.getInt("customer_id");
+
+
+				System.out.println("Product ID: " + productIdFromDB);
+				System.out.println("Product Name: " + productName);
+				System.out.println("Description: " + description);
+				System.out.println("Price: " + price);
+
+				// Now you can use the retrieved data to insert into the 'product_cart' table
+				String insertQuery = "INSERT INTO Product_cart (product_id, description, name, price, image, quantity, weight, category_id, customer_id) " +
+						"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+				try (PreparedStatement insertStmt = con.prepareStatement(insertQuery)) {
+					insertStmt.setInt(1, productIdFromDB);
+					insertStmt.setString(2, description);
+					insertStmt.setString(3, productName);
+					insertStmt.setDouble(4, price);
+					insertStmt.setString(5, imageFromDB);
+					insertStmt.setInt(6, quantityFromDB);
+					insertStmt.setInt(7, weightFromDB);
+					insertStmt.setInt(8, categoryIdFromDB);
+					insertStmt.setInt(9, customerIdFromDB);
+
+					// Execute the insert statement
+					int rowsAffected = insertStmt.executeUpdate();
+
+
+				} catch (SQLException ex) {
+					throw new RuntimeException(ex);
+				}
+			}
+			// Add your logic to store the product information, maybe in a session or database table
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return "redirect:/index"; // Redirect to the index page or any other page
+
+	}
+
+
+
+	@GetMapping("/cart")
+	public String viewCart(Model model) {
+		// Fetch products by IDs from the cartProductIds list
+
+
+		// Add the cartProducts to the model
+
+
+		// Return the cartproduct.jsp page
+		return "cartproduct";
+	}
+
+
+
+
+
+	@GetMapping("/cartproduct")
+	public String viewCartProduct() {
+		return "cartproduct";
 	}
 
 	@GetMapping("/carts")
