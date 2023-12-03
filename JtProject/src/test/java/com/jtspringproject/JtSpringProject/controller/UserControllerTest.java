@@ -1,109 +1,401 @@
 package com.jtspringproject.JtSpringProject.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
+import com.jtspringproject.JtSpringProject.models.Category;
 import com.jtspringproject.JtSpringProject.models.Product;
 import com.jtspringproject.JtSpringProject.models.User;
 import com.jtspringproject.JtSpringProject.services.cartService;
 import com.jtspringproject.JtSpringProject.services.productService;
 import com.jtspringproject.JtSpringProject.services.userService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.ui.Model;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(UserController.class)
-public class UserControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Mock
-    private userService userService;
-
-    @Mock
-    private productService productService;
-
-    @Mock
+@ContextConfiguration(classes = {UserController.class})
+@ExtendWith(SpringExtension.class)
+class UserControllerTest {
+    @MockBean
     private cartService cartService;
 
-    @InjectMocks
+    @MockBean
+    private productService productService;
+
+    @Autowired
     private UserController userController;
 
-    private List<User> userList;
-    private List<Product> productList;
+    @MockBean
+    private userService userService;
 
-    @Before
-    public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+    /**
+  {@link UserController#deleteCartItem(int)}
+     */
+    @Test
+    void testDeleteCartItem() throws Exception {
+        MockHttpServletRequestBuilder postResult = MockMvcRequestBuilders.post("/deleteCartItem");
+        MockHttpServletRequestBuilder requestBuilder = postResult.param("id", String.valueOf(1));
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(MockMvcResultMatchers.model().size(0))
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/cartproduct"))
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/cartproduct"));
+    }
 
-        userList = new ArrayList<>();
-        userList.add(new User());
+    /**
+ {@link UserController#registerUser()}
+     */
+    @Test
+    void testRegisterUser() {
 
-        productList = new ArrayList<>();
-        productList.add(new Product());
+        assertEquals("register", (new UserController()).registerUser());
+    }
 
-        when(userService.checkUserExists("existingUsername")).thenReturn(true);
-        when(userService.checkUserExists("newUsername")).thenReturn(false);
-        when(userService.checkLogin("existingUsername", "password")).thenReturn(new User());
-        when(userService.checkLogin("nonExistingUsername", "password")).thenReturn(null);
-        when(userService.getUsers()).thenReturn(userList);
-        when(productService.getProducts()).thenReturn(productList);
+    /**
+    {@link UserController#buy()}
+     */
+    @Test
+    void testBuy() {
+
+        assertEquals("buy", (new UserController()).buy());
+    }
+
+    /**
+   {@link UserController#addToCart(int)}
+     */
+    @Test
+    void testAddToCart() {
+
+        assertThrows(RuntimeException.class, () -> (new UserController()).addToCart(1));
+        assertThrows(RuntimeException.class, () -> (new UserController()).addToCart("42"));
+    }
+
+    /**
+     {@link UserController#viewCartProduct()}
+     */
+    @Test
+    void testViewCartProduct() {
+
+        assertEquals("cartproduct", (new UserController()).viewCartProduct());
+    }
+
+    /**
+     {@link UserController#getCartDetail()}
+     */
+    @Test
+    void testGetCartDetail() throws Exception {
         when(cartService.getCarts()).thenReturn(new ArrayList<>());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/carts");
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("carts"))
+                .andExpect(MockMvcResultMatchers.view().name("cartproduct"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("cartproduct"));
     }
 
+    /**
+      {@link UserController#getCartDetail()}
+     */
     @Test
-    public void testUserLogin() throws Exception {
-        mockMvc.perform(get("/userloginvalidate")
-                        .param("username", "existingUsername")
-                        .param("password", "password"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("index"));
-
-        mockMvc.perform(get("/userloginvalidate")
-                        .param("username", "nonExistingUsername")
-                        .param("password", "password"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("userLogin"));
+    void testGetCartDetail2() throws Exception {
+        when(cartService.getCarts()).thenReturn(new ArrayList<>());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/carts");
+        requestBuilder.characterEncoding("Encoding");
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("carts"))
+                .andExpect(MockMvcResultMatchers.view().name("cartproduct"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("cartproduct"));
     }
 
+    /**
+      {@link UserController#getproduct()}
+     */
     @Test
-    public void testNewUserRegister() throws Exception {
-        mockMvc.perform(get("/newuserregister")
-                        .param("username", "existingUsername"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("register"));
-
-        mockMvc.perform(get("/newuserregister")
-                        .param("username", "newUsername"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("userLogin"));
+    void testGetproduct() throws Exception {
+        when(productService.getProducts()).thenReturn(new ArrayList<>());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/user/products");
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("msg"))
+                .andExpect(MockMvcResultMatchers.view().name("uproduct"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("uproduct"));
     }
 
+    /**
+     {@link UserController#getproduct()}
+     */
     @Test
-    public void testGetProduct() throws Exception {
-        mockMvc.perform(get("/user/products"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("uproduct"))
-                .andExpect(model().attribute("products", hasSize(1)));
+    void testGetproduct2() throws Exception {
+        Category category = new Category();
+        category.setId(1);
+        category.setName("?");
+
+        Product product = new Product();
+        product.setCategory(category);
+        product.setDescription("The characteristics of someone or something");
+        product.setId(1);
+        product.setImage("?");
+        product.setName("?");
+        product.setPrice(1);
+        product.setQuantity(1);
+        product.setWeight(3);
+
+        ArrayList<Product> productList = new ArrayList<>();
+        productList.add(product);
+        when(productService.getProducts()).thenReturn(productList);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/user/products");
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("products"))
+                .andExpect(MockMvcResultMatchers.view().name("uproduct"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("uproduct"));
     }
 
+    /**
+      {@link UserController#newUseRegister(User)}
+     */
     @Test
-    public void testGetCartDetail() throws Exception {
-        mockMvc.perform(get("/carts"))
-                .andExpect(status().isOk());
+    void testNewUseRegister() throws Exception {
+        User user = new User();
+        user.setAddress("42 Main St");
+        user.setEmail("jane.doe@example.org");
+        user.setId(1);
+        user.setPassword("iloveyou");
+        user.setRole("Role");
+        user.setUsername("janedoe");
+        when(userService.checkUserExists(Mockito.<String>any())).thenReturn(true);
+        when(userService.addUser(Mockito.<User>any())).thenReturn(user);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/newuserregister");
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(2))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("msg", "user"))
+                .andExpect(MockMvcResultMatchers.view().name("register"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("register"));
+    }
+
+    /**
+      {@link UserController#newUseRegister(User)}
+     */
+    @Test
+    void testNewUseRegister2() throws Exception {
+        User user = new User();
+        user.setAddress("42 Main St");
+        user.setEmail("jane.doe@example.org");
+        user.setId(1);
+        user.setPassword("iloveyou");
+        user.setRole("Role");
+        user.setUsername("janedoe");
+        when(userService.checkUserExists(Mockito.<String>any())).thenReturn(false);
+        when(userService.addUser(Mockito.<User>any())).thenReturn(user);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/newuserregister");
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("user"))
+                .andExpect(MockMvcResultMatchers.view().name("userLogin"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("userLogin"));
+    }
+
+    /**
+     {@link UserController#returnIndex()}
+     */
+    @Test
+    void testReturnIndex() throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/");
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(0))
+                .andExpect(MockMvcResultMatchers.view().name("userLogin"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("userLogin"));
+    }
+
+    /**
+     {@link UserController#returnIndex()}
+     */
+    @Test
+    void testReturnIndex2() throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/");
+        requestBuilder.characterEncoding("Encoding");
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(0))
+                .andExpect(MockMvcResultMatchers.view().name("userLogin"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("userLogin"));
+    }
+
+    /**
+     * {@link UserController#userlogin(String, String, Model, HttpServletResponse)}
+     */
+    @Test
+    void testUserlogin() throws Exception {
+        User user = new User();
+        user.setAddress("42 Main St");
+        user.setEmail("jane.doe@example.org");
+        user.setId(1);
+        user.setPassword("iloveyou");
+        user.setRole("Role");
+        user.setUsername("janedoe");
+        when(userService.checkLogin(Mockito.<String>any(), Mockito.<String>any())).thenReturn(user);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/userloginvalidate")
+                .param("password", "foo")
+                .param("username", "foo");
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(1))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("msg"))
+                .andExpect(MockMvcResultMatchers.view().name("userLogin"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("userLogin"));
+    }
+
+    /**
+     {@link UserController#userlogin(String, String, Model, HttpServletResponse)}
+     */
+    @Test
+    void testUserlogin2() throws Exception {
+        when(productService.getProducts()).thenReturn(new ArrayList<>());
+
+        User user = new User();
+        user.setAddress("42 Main St");
+        user.setEmail("jane.doe@example.org");
+        user.setId(1);
+        user.setPassword("iloveyou");
+        user.setRole("Role");
+        user.setUsername("foo");
+        when(userService.checkLogin(Mockito.<String>any(), Mockito.<String>any())).thenReturn(user);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/userloginvalidate")
+                .param("password", "foo")
+                .param("username", "foo");
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(2))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("msg", "user"))
+                .andExpect(MockMvcResultMatchers.view().name("index"));
+        ResultActions resultActions2 = resultActions.andExpect(MockMvcResultMatchers.cookie().value("username", "foo"));
+        ResultActions resultActions3 = resultActions2.andExpect(MockMvcResultMatchers.cookie().secure("username", false));
+        ResultActions resultActions4 = resultActions3.andExpect(MockMvcResultMatchers.cookie().httpOnly("username", false));
+        resultActions4.andExpect(MockMvcResultMatchers.cookie().maxAge("username", -1))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("index"));
+    }
+
+    /**
+     * {@link UserController#userlogin(String, String, Model, HttpServletResponse)}
+     */
+    @Test
+    void testUserlogin3() throws Exception {
+        Category category = new Category();
+        category.setId(1);
+        category.setName("?");
+
+        Product product = new Product();
+        product.setCategory(category);
+        product.setDescription("The characteristics of someone or something");
+        product.setId(1);
+        product.setImage("?");
+        product.setName("?");
+        product.setPrice(2);
+        product.setQuantity(2);
+        product.setWeight(3);
+
+        ArrayList<Product> productList = new ArrayList<>();
+        productList.add(product);
+        when(productService.getProducts()).thenReturn(productList);
+
+        User user = new User();
+        user.setAddress("42 Main St");
+        user.setEmail("jane.doe@example.org");
+        user.setId(1);
+        user.setPassword("iloveyou");
+        user.setRole("Role");
+        user.setUsername("foo");
+        when(userService.checkLogin(Mockito.<String>any(), Mockito.<String>any())).thenReturn(user);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/userloginvalidate")
+                .param("password", "foo")
+                .param("username", "foo");
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(2))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("products", "user"))
+                .andExpect(MockMvcResultMatchers.view().name("index"));
+        ResultActions resultActions2 = resultActions.andExpect(MockMvcResultMatchers.cookie().value("username", "foo"));
+        ResultActions resultActions3 = resultActions2.andExpect(MockMvcResultMatchers.cookie().secure("username", false));
+        ResultActions resultActions4 = resultActions3.andExpect(MockMvcResultMatchers.cookie().httpOnly("username", false));
+        resultActions4.andExpect(MockMvcResultMatchers.cookie().maxAge("username", -1))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("index"));
+    }
+
+    /**
+    {@link UserController#viewCart(Model)}
+     */
+    @Test
+    void testViewCart() throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/cart");
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(0))
+                .andExpect(MockMvcResultMatchers.view().name("cartproduct"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("cartproduct"));
+    }
+
+    /**
+     {@link UserController#viewCart(Model)}
+     */
+    @Test
+    void testViewCart2() throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/cart");
+        requestBuilder.characterEncoding("Encoding");
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().size(0))
+                .andExpect(MockMvcResultMatchers.view().name("cartproduct"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("cartproduct"));
     }
 }

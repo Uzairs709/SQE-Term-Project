@@ -1,97 +1,45 @@
 package com.jtspringproject.JtSpringProject.models;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class UserTest {
-
-    private User user;
-
-    @Before
-    public void setUp() {
-        user = new User();
-    }
-
-    @After
-    public void tearDown() {
-        // Clean up any data after each test
-    }
-
+class UserTest {
+    /**
+     * <ul>
+     *   <li>{@link User#setAddress(String)}
+     *   <li>{@link User#setEmail(String)}
+     *   <li>{@link User#setId(int)}
+     *   <li>{@link User#setPassword(String)}
+     *   <li>{@link User#setRole(String)}
+     *   <li>{@link User#setUsername(String)}
+     *   <li>{@link User#getAddress()}
+     *   <li>{@link User#getEmail()}
+     *   <li>{@link User#getId()}
+     *   <li>{@link User#getPassword()}
+     *   <li>{@link User#getRole()}
+     *   <li>{@link User#getUsername()}
+     * </ul>
+     */
     @Test
-    public void testGetId() {
+    void testSetAddress() {
+        User user = new User();
+        user.setAddress("42 Main St");
+        user.setEmail("jane.doe@example.org");
         user.setId(1);
-        assertEquals(1, user.getId());
+        user.setPassword("iloveyou");
+        user.setRole("Role");
+        user.setUsername("janedoe");
+        String actualAddress = user.getAddress();
+        String actualEmail = user.getEmail();
+        int actualId = user.getId();
+        String actualPassword = user.getPassword();
+        String actualRole = user.getRole();
+        assertEquals("42 Main St", actualAddress);
+        assertEquals("Role", actualRole);
+        assertEquals("iloveyou", actualPassword);
+        assertEquals("jane.doe@example.org", actualEmail);
+        assertEquals("janedoe", user.getUsername());
+        assertEquals(1, actualId);
     }
-
-    @Test
-    public void testSetId() {
-        user.setId(1);
-        assertEquals(1, user.getId());
-    }
-
-    @Test
-    public void testGetUsername() {
-        user.setUsername("TestUser");
-        assertEquals("TestUser", user.getUsername());
-    }
-
-    @Test
-    public void testSetUsername() {
-        user.setUsername("TestUser");
-        assertEquals("TestUser", user.getUsername());
-    }
-
-    @Test
-    public void testGetEmail() {
-        user.setEmail("test@example.com");
-        assertEquals("test@example.com", user.getEmail());
-    }
-
-    @Test
-    public void testSetEmail() {
-        user.setEmail("test@example.com");
-        assertEquals("test@example.com", user.getEmail());
-    }
-
-    @Test
-    public void testGetPassword() {
-        user.setPassword("testPassword");
-        assertEquals("testPassword", user.getPassword());
-    }
-
-    @Test
-    public void testSetPassword() {
-        user.setPassword("testPassword");
-        assertEquals("testPassword", user.getPassword());
-    }
-
-    @Test
-    public void testGetRole() {
-        user.setRole("ROLE_USER");
-        assertEquals("ROLE_USER", user.getRole());
-    }
-
-    @Test
-    public void testSetRole() {
-        user.setRole("ROLE_USER");
-        assertEquals("ROLE_USER", user.getRole());
-    }
-
-    @Test
-    public void testGetAddress() {
-        user.setAddress("Test Address");
-        assertEquals("Test Address", user.getAddress());
-    }
-
-    @Test
-    public void testSetAddress() {
-        user.setAddress("Test Address");
-        assertEquals("Test Address", user.getAddress());
-    }
-
-    // Add more tests based on your requirements
 }

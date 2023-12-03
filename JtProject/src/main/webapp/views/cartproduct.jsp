@@ -63,7 +63,7 @@
 			try {
 				String url = "jdbc:mysql://localhost:3306/ecommjava";
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection con = DriverManager.getConnection(url, "root", "tayyab3037");
+				Connection con = DriverManager.getConnection(url, "root", "LOL090LOL0");
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery("select * from Product_cart");
 				while (rs.next()) {

@@ -1,125 +1,60 @@
 package com.jtspringproject.JtSpringProject.models;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ProductTest {
-
-    private Product product;
-
-    @Before
-    public void setUp() {
-        product = new Product();
-    }
-
-    @After
-    public void tearDown() {
-        // Clean up any data after each test
-    }
-
+class ProductTest {
+    /**
+     * <ul>
+     *   <li>{@link Product#setCategory(Category)}
+     *   <li>{@link Product#setDescription(String)}
+     *   <li>{@link Product#setId(int)}
+     *   <li>{@link Product#setImage(String)}
+     *   <li>{@link Product#setName(String)}
+     *   <li>{@link Product#setPrice(int)}
+     *   <li>{@link Product#setQuantity(int)}
+     *   <li>{@link Product#setWeight(int)}
+     *   <li>{@link Product#getCategory()}
+     *   <li>{@link Product#getDescription()}
+     *   <li>{@link Product#getId()}
+     *   <li>{@link Product#getImage()}
+     *   <li>{@link Product#getName()}
+     *   <li>{@link Product#getPrice()}
+     *   <li>{@link Product#getQuantity()}
+     *   <li>{@link Product#getWeight()}
+     * </ul>
+     */
     @Test
-    public void testGetId() {
-        product.setId(1);
-        assertEquals(1, product.getId());
-    }
+    void testSetCategory() {
+        Product product = new Product();
 
-    @Test
-    public void testSetId() {
-        product.setId(1);
-        assertEquals(1, product.getId());
-    }
-
-    @Test
-    public void testGetName() {
-        product.setName("TestProduct");
-        assertEquals("TestProduct", product.getName());
-    }
-
-    @Test
-    public void testSetName() {
-        product.setName("TestProduct");
-        assertEquals("TestProduct", product.getName());
-    }
-
-    @Test
-    public void testGetImage() {
-        product.setImage("test_image.jpg");
-        assertEquals("test_image.jpg", product.getImage());
-    }
-
-    @Test
-    public void testSetImage() {
-        product.setImage("test_image.jpg");
-        assertEquals("test_image.jpg", product.getImage());
-    }
-
-    @Test
-    public void testGetCategory() {
         Category category = new Category();
+        category.setId(1);
+        category.setName("Name");
         product.setCategory(category);
-        assertNotNull(product.getCategory());
-        assertEquals(category, product.getCategory());
+        product.setDescription("The characteristics of someone or something");
+        product.setId(1);
+        product.setImage("Image");
+        product.setName("Name");
+        product.setPrice(1);
+        product.setQuantity(1);
+        product.setWeight(3);
+        Category actualCategory = product.getCategory();
+        String actualDescription = product.getDescription();
+        int actualId = product.getId();
+        String actualImage = product.getImage();
+        String actualName = product.getName();
+        int actualPrice = product.getPrice();
+        int actualQuantity = product.getQuantity();
+        assertEquals("Image", actualImage);
+        assertEquals("Name", actualName);
+        assertEquals("The characteristics of someone or something", actualDescription);
+        assertEquals(1, actualId);
+        assertEquals(1, actualPrice);
+        assertEquals(1, actualQuantity);
+        assertEquals(3, product.getWeight());
+        assertSame(category, actualCategory);
     }
-
-    @Test
-    public void testSetCategory() {
-        Category category = new Category();
-        product.setCategory(category);
-        assertNotNull(product.getCategory());
-        assertEquals(category, product.getCategory());
-    }
-
-    @Test
-    public void testGetQuantity() {
-        product.setQuantity(10);
-        assertEquals(10, product.getQuantity());
-    }
-
-    @Test
-    public void testSetQuantity() {
-        product.setQuantity(10);
-        assertEquals(10, product.getQuantity());
-    }
-
-    @Test
-    public void testGetPrice() {
-        product.setPrice(50);
-        assertEquals(50, product.getPrice());
-    }
-
-    @Test
-    public void testSetPrice() {
-        product.setPrice(50);
-        assertEquals(50, product.getPrice());
-    }
-
-    @Test
-    public void testGetWeight() {
-        product.setWeight(2);
-        assertEquals(2, product.getWeight());
-    }
-
-    @Test
-    public void testSetWeight() {
-        product.setWeight(2);
-        assertEquals(2, product.getWeight());
-    }
-
-    @Test
-    public void testGetDescription() {
-        product.setDescription("Test description");
-        assertEquals("Test description", product.getDescription());
-    }
-
-    @Test
-    public void testSetDescription() {
-        product.setDescription("Test description");
-        assertEquals("Test description", product.getDescription());
-    }
-
-    // Add more tests based on your requirements
 }
