@@ -31,7 +31,7 @@ import org.springframework.ui.Model;
 
 @ContextConfiguration(classes = {AdminController.class})
 @ExtendWith(SpringExtension.class)
-class AdminControllerTest {
+class AdminControllerDiffblueTest {
   @Autowired
   private AdminController adminController;
 
@@ -45,7 +45,7 @@ class AdminControllerTest {
   private userService userService;
 
   /**
-   {@link AdminController#addCategory(String)}
+   * Method under test: {@link AdminController#addCategory(String)}
    */
   @Test
   void testAddCategory() throws Exception {
@@ -65,7 +65,7 @@ class AdminControllerTest {
   }
 
   /**
-  {@link AdminController#updateCategory(int, String)}
+   * Method under test: {@link AdminController#updateCategory(int, String)}
    */
   @Test
   void testUpdateCategory() throws Exception {
@@ -86,7 +86,7 @@ class AdminControllerTest {
   }
 
   /**
- {@link AdminController#addProduct()}
+   * Method under test:  {@link AdminController#addProduct()}
    */
   @Test
   void testAddProduct() throws Exception {
@@ -103,7 +103,7 @@ class AdminControllerTest {
   }
 
   /**
-  {@link AdminController#addProduct()}
+   * Method under test:  {@link AdminController#addProduct()}
    */
   @Test
   void testAddProduct2() throws Exception {
@@ -121,12 +121,17 @@ class AdminControllerTest {
   }
 
   /**
+   * Method under test:
    * {@link AdminController#addProduct(String, int, int, int, int, String, String)}
    */
   @Test
   @Disabled("TODO: Complete this test")
   void testAddProduct3() throws Exception {
+    // TODO: Complete this test.
+    //   Diffblue AI was unable to find a test
 
+    // Arrange
+    // TODO: Populate arranged inputs
     MockHttpServletRequestBuilder postResult = MockMvcRequestBuilders.post("/admin/products/add");
     MockHttpServletRequestBuilder paramResult = postResult.param("categoryid", String.valueOf(1))
             .param("description", "foo")
@@ -137,10 +142,16 @@ class AdminControllerTest {
     MockHttpServletRequestBuilder requestBuilder = paramResult3.param("weight", String.valueOf(1));
     MockMvc buildResult = MockMvcBuilders.standaloneSetup(adminController).build();
 
+    // Act
     ResultActions actualPerformResult = buildResult.perform(requestBuilder);
 
+    // Assert
+    // TODO: Add assertions on result
   }
 
+  /**
+   * Method under test: {@link AdminController#adminHome(Model)}
+   */
   @Test
   void testAdminHome() throws Exception {
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/admin/Dashboard");
@@ -154,7 +165,7 @@ class AdminControllerTest {
   }
 
   /**
-   {@link AdminController#adminlog(Model)}
+   * Method under test: {@link AdminController#adminlog(Model)}
    */
   @Test
   void testAdminlog() throws Exception {
@@ -169,7 +180,7 @@ class AdminControllerTest {
   }
 
   /**
-  {@link AdminController#adminlogin()}
+   * Method under test: {@link AdminController#adminlogin()}
    */
   @Test
   void testAdminlogin() throws Exception {
@@ -184,7 +195,7 @@ class AdminControllerTest {
   }
 
   /**
-  {@link AdminController#adminlogin()}
+   * Method under test: {@link AdminController#adminlogin()}
    */
   @Test
   void testAdminlogin2() throws Exception {
@@ -200,7 +211,7 @@ class AdminControllerTest {
   }
 
   /**
-   {@link AdminController#adminlogin(String, String)}
+   * Method under test: {@link AdminController#adminlogin(String, String)}
    */
   @Test
   void testAdminlogin3() throws Exception {
@@ -226,7 +237,7 @@ class AdminControllerTest {
   }
 
   /**
-   {@link AdminController#deleteCustomer(int)}
+   * Method under test: {@link AdminController#deleteCustomer(int)}
    */
   @Test
   void testDeleteCustomer() throws Exception {
@@ -243,7 +254,7 @@ class AdminControllerTest {
   }
 
   /**
-   {@link AdminController#getCustomerDetail()}
+   * Method under test: {@link AdminController#getCustomerDetail()}
    */
   @Test
   void testGetCustomerDetail() throws Exception {
@@ -258,7 +269,7 @@ class AdminControllerTest {
   }
 
   /**
-    {@link AdminController#getcategory()}
+   * Method under test: {@link AdminController#getcategory()}
    */
   @Test
   void testGetcategory() throws Exception {
@@ -273,7 +284,7 @@ class AdminControllerTest {
   }
 
   /**
-  {@link AdminController#getproduct()}
+   * Method under test: {@link AdminController#getproduct()}
    */
   @Test
   void testGetproduct() throws Exception {
@@ -288,7 +299,7 @@ class AdminControllerTest {
   }
 
   /**
-  {@link AdminController#index(Model)}
+   * Method under test: {@link AdminController#index(Model)}
    */
   @Test
   void testIndex() throws Exception {
@@ -303,7 +314,7 @@ class AdminControllerTest {
   }
 
   /**
- {@link AdminController#postproduct()}
+   * Method under test: {@link AdminController#postproduct()}
    */
   @Test
   void testPostproduct() throws Exception {
@@ -318,7 +329,7 @@ class AdminControllerTest {
   }
 
   /**
-  {@link AdminController#profileDisplay(Model)}
+   * Method under test: {@link AdminController#profileDisplay(Model)}
    */
   @Test
   void testProfileDisplay() throws Exception {
@@ -333,7 +344,7 @@ class AdminControllerTest {
   }
 
   /**
-  {@link AdminController#profileDisplay(Model)}
+   * Method under test: {@link AdminController#profileDisplay(Model)}
    */
   @Test
   void testProfileDisplay2() throws Exception {
@@ -349,7 +360,7 @@ class AdminControllerTest {
   }
 
   /**
-   {@link AdminController#removeCategoryDb(int)}
+   * Method under test:  {@link AdminController#removeCategoryDb(int)}
    */
   @Test
   void testRemoveCategoryDb() throws Exception {
@@ -366,7 +377,7 @@ class AdminControllerTest {
   }
 
   /**
-   {@link AdminController#removeProduct(int)}
+   * Method under test:  {@link AdminController#removeProduct(int)}
    */
   @Test
   void testRemoveProduct() throws Exception {
@@ -383,7 +394,7 @@ class AdminControllerTest {
   }
 
   /**
- {@link AdminController#returnIndex()}
+   * Method under test: {@link AdminController#returnIndex()}
    */
   @Test
   void testReturnIndex() throws Exception {
@@ -398,7 +409,7 @@ class AdminControllerTest {
   }
 
   /**
-  {@link AdminController#returnIndex()}
+   * Method under test: {@link AdminController#returnIndex()}
    */
   @Test
   void testReturnIndex2() throws Exception {
@@ -414,6 +425,7 @@ class AdminControllerTest {
   }
 
   /**
+   * Method under test:
    * {@link AdminController#updateProduct(int, String, int, int, int, int, String, String)}
    */
   @Test
@@ -436,6 +448,7 @@ class AdminControllerTest {
   }
 
   /**
+   * Method under test:
    * {@link AdminController#updateUserProfile(int, String, String, String, String)}
    */
   @Test
@@ -456,7 +469,7 @@ class AdminControllerTest {
   }
 
   /**
-  {@link AdminController#updateproduct(int)}
+   * Method under test:  {@link AdminController#updateproduct(int)}
    */
   @Test
   void testUpdateproduct() throws Exception {

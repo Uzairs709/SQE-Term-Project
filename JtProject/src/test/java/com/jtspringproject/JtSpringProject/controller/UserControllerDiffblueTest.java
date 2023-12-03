@@ -30,7 +30,7 @@ import org.springframework.ui.Model;
 
 @ContextConfiguration(classes = {UserController.class})
 @ExtendWith(SpringExtension.class)
-class UserControllerTest {
+class UserControllerDiffblueTest {
     @MockBean
     private cartService cartService;
 
@@ -44,7 +44,7 @@ class UserControllerTest {
     private userService userService;
 
     /**
-  {@link UserController#deleteCartItem(int)}
+     * Method under test: {@link UserController#deleteCartItem(int)}
      */
     @Test
     void testDeleteCartItem() throws Exception {
@@ -60,44 +60,79 @@ class UserControllerTest {
     }
 
     /**
- {@link UserController#registerUser()}
+     * Method under test: {@link UserController#registerUser()}
      */
     @Test
     void testRegisterUser() {
+        //   Diffblue Cover was unable to write a Spring test,
+        //   so wrote a non-Spring test instead.
+        //   Reason: R013 No inputs found that don't throw a trivial exception.
+        //   Diffblue Cover tried to run the arrange/act section, but the method under
+        //   test threw
+        //   javax.servlet.ServletException: Circular view path [register]: would dispatch back to the current handler URL [/register] again. Check your ViewResolver setup! (Hint: This may be the result of an unspecified view, due to default view name generation.)
+        //       at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+        //       at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+        //   See https://diff.blue/R013 to resolve this issue.
 
         assertEquals("register", (new UserController()).registerUser());
     }
 
     /**
-    {@link UserController#buy()}
+     * Method under test: {@link UserController#buy()}
      */
     @Test
     void testBuy() {
+        //   Diffblue Cover was unable to write a Spring test,
+        //   so wrote a non-Spring test instead.
+        //   Reason: R013 No inputs found that don't throw a trivial exception.
+        //   Diffblue Cover tried to run the arrange/act section, but the method under
+        //   test threw
+        //   javax.servlet.ServletException: Circular view path [buy]: would dispatch back to the current handler URL [/buy] again. Check your ViewResolver setup! (Hint: This may be the result of an unspecified view, due to default view name generation.)
+        //       at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+        //       at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+        //   See https://diff.blue/R013 to resolve this issue.
 
         assertEquals("buy", (new UserController()).buy());
     }
 
     /**
-   {@link UserController#addToCart(int)}
+     * Method under test: {@link UserController#addToCart(int)}
      */
     @Test
     void testAddToCart() {
+        //   Diffblue Cover was unable to write a Spring test,
+        //   so wrote a non-Spring test instead.
+        //   Reason: R011 Sandboxing policy violation.
+        //   Diffblue Cover ran code in your project that tried
+        //     to access the network.
+        //   Diffblue Cover's default sandboxing policy disallows this in order to prevent
+        //   your code from damaging your system environment.
+        //   See https://diff.blue/R011 to resolve this issue.
 
         assertThrows(RuntimeException.class, () -> (new UserController()).addToCart(1));
         assertThrows(RuntimeException.class, () -> (new UserController()).addToCart("42"));
     }
 
     /**
-     {@link UserController#viewCartProduct()}
+     * Method under test: {@link UserController#viewCartProduct()}
      */
     @Test
     void testViewCartProduct() {
+        //   Diffblue Cover was unable to write a Spring test,
+        //   so wrote a non-Spring test instead.
+        //   Reason: R013 No inputs found that don't throw a trivial exception.
+        //   Diffblue Cover tried to run the arrange/act section, but the method under
+        //   test threw
+        //   javax.servlet.ServletException: Circular view path [cartproduct]: would dispatch back to the current handler URL [/cartproduct] again. Check your ViewResolver setup! (Hint: This may be the result of an unspecified view, due to default view name generation.)
+        //       at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+        //       at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+        //   See https://diff.blue/R013 to resolve this issue.
 
         assertEquals("cartproduct", (new UserController()).viewCartProduct());
     }
 
     /**
-     {@link UserController#getCartDetail()}
+     * Method under test:  {@link UserController#getCartDetail()}
      */
     @Test
     void testGetCartDetail() throws Exception {
@@ -114,7 +149,7 @@ class UserControllerTest {
     }
 
     /**
-      {@link UserController#getCartDetail()}
+     * Method under test:  {@link UserController#getCartDetail()}
      */
     @Test
     void testGetCartDetail2() throws Exception {
@@ -132,7 +167,7 @@ class UserControllerTest {
     }
 
     /**
-      {@link UserController#getproduct()}
+     * Method under test:  {@link UserController#getproduct()}
      */
     @Test
     void testGetproduct() throws Exception {
@@ -149,7 +184,7 @@ class UserControllerTest {
     }
 
     /**
-     {@link UserController#getproduct()}
+     * Method under test: {@link UserController#getproduct()}
      */
     @Test
     void testGetproduct2() throws Exception {
@@ -182,7 +217,7 @@ class UserControllerTest {
     }
 
     /**
-      {@link UserController#newUseRegister(User)}
+     * Method under test: {@link UserController#newUseRegister(User)}
      */
     @Test
     void testNewUseRegister() throws Exception {
@@ -207,7 +242,7 @@ class UserControllerTest {
     }
 
     /**
-      {@link UserController#newUseRegister(User)}
+     * Method under test: {@link UserController#newUseRegister(User)}
      */
     @Test
     void testNewUseRegister2() throws Exception {
@@ -232,7 +267,7 @@ class UserControllerTest {
     }
 
     /**
-     {@link UserController#returnIndex()}
+     * Method under test: {@link UserController#returnIndex()}
      */
     @Test
     void testReturnIndex() throws Exception {
@@ -247,7 +282,7 @@ class UserControllerTest {
     }
 
     /**
-     {@link UserController#returnIndex()}
+     * Method under test: {@link UserController#returnIndex()}
      */
     @Test
     void testReturnIndex2() throws Exception {
@@ -263,6 +298,7 @@ class UserControllerTest {
     }
 
     /**
+     * Method under test:
      * {@link UserController#userlogin(String, String, Model, HttpServletResponse)}
      */
     @Test
@@ -289,7 +325,7 @@ class UserControllerTest {
     }
 
     /**
-     {@link UserController#userlogin(String, String, Model, HttpServletResponse)}
+     * Method under test:  {@link UserController#userlogin(String, String, Model, HttpServletResponse)}
      */
     @Test
     void testUserlogin2() throws Exception {
@@ -321,6 +357,7 @@ class UserControllerTest {
     }
 
     /**
+     * Method under test:
      * {@link UserController#userlogin(String, String, Model, HttpServletResponse)}
      */
     @Test
@@ -369,7 +406,7 @@ class UserControllerTest {
     }
 
     /**
-    {@link UserController#viewCart(Model)}
+     * Method under test: {@link UserController#viewCart(Model)}
      */
     @Test
     void testViewCart() throws Exception {
@@ -384,7 +421,7 @@ class UserControllerTest {
     }
 
     /**
-     {@link UserController#viewCart(Model)}
+     * Method under test: {@link UserController#viewCart(Model)}
      */
     @Test
     void testViewCart2() throws Exception {
