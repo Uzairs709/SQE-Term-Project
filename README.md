@@ -147,4 +147,11 @@ You can also run specific test methods within a test class by specifying the met
 mvn test -Dtest=MyTest#myTestMethod
 
 
-
+Go to actions in the git hub, then configure the java with maven. Now on your project click on the "M" button on the right side of screen.
+![Alt text](img1.png)
+now click on following button.
+![Alt text](img2.png)
+It will show the command interface like this,
+![Alt text](img3.png)
+ you can run any command suck that "mvn test". And it will run all the test cases of you project.
+![Alt text](img4.png)
